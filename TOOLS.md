@@ -65,3 +65,13 @@ Add whatever helps you do your job. This is your cheat sheet.
 - `browser` is a built-in agent tool (like read/write/exec), NOT a bash command
 - Never run `browser` via exec/bash — call it directly as a tool
 - After config changes, Gateway needs restart for browser to activate
+
+### Image Analysis
+- **The agent model (glm-5) cannot analyze images directly.**
+- To analyze any image (screenshots, fridge photos, recipe images), use this script:
+  ```bash
+  python3 ~/.openclaw/workspace/scripts/analyze-image.py --image "/path/to/image.jpg" --prompt "描述你想分析的内容"
+  ```
+- This script calls Qwen3-VL-Plus API which can actually see and understand images.
+- Use it for: analyzing XHS recipe screenshots, identifying fridge contents, reading text from images.
+- Do NOT use the built-in `image` tool — it won't work with the current model.

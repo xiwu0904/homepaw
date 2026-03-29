@@ -79,6 +79,16 @@ def identify_fridge(image_path: str, api_key: str) -> list:
     )
 
     raw = resp.choices[0].message.content.strip()
+    # Debug: print raw response
+    print(f"[DEBUG] VL raw response: {raw[:300]}", file=sys.stderr)
+    
+    # Strip markdown code blocks
+    raw = re.sub(r'```json\s*', '', raw)
+    raw = re.sub(r'```\s*', '', raw)
+    
+    # Strip thinking tags (Qwen3 sometimes adds these)
+    raw = re.sub(r'<think>[\s\S]*?</think>', '', raw)
+    
     # Extract JSON array
     m = re.search(r'\[[\s\S]*\]', raw)
     if m:
@@ -97,10 +107,15 @@ def compare_with_recipe(fridge_items: list, recipe: dict) -> dict:
     for item in fridge_items:
         fridge_map[item["name"].lower()] = item
 
-    # Common seasonings assumed to be available
-    common = {"盐", "糖", "白糖", "食用油", "油", "酱油", "生抽", "老抽",
-              "醋", "料酒", "胡椒粉", "味精", "鸡精", "淀粉", "水淀粉",
-              "花椒", "辣椒", "蚝油", "香油", "芝麻油"}
+    # Common seasonings/condiments assumed to be available at home
+    common = {"盐", "糖", "白糖", "冰糖", "食用油", "油", "酱油", "生抽", "老抽",
+              "醋", "料酒", "黄酒", "胡椒粉", "味精", "鸡精", "淀粉", "水淀粉",
+              "花椒", "辣椒", "干辣椒", "蚝油", "香油", "芝麻油", "豆瓣酱",
+              "葱", "姜", "蒜", "大葱", "小葱", "香葱", "姜片", "蒜片",
+              "八角", "桂皮", "香叶", "草果", "丁香", "小茴香", "大料",
+              "五香粉", "十三香", "白胡椒", "黑胡椒", "孜然",
+              "番茄酱", "豆豉", "腐乳", "甜面酱", "芝麻酱",
+              "水", "热水", "开水", "清水", "温水"}
 
     comparison = []
     missing = []

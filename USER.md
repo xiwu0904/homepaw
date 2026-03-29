@@ -4,6 +4,7 @@
 - **What to call them:** Robin
 - **Pronouns:** _(to learn)_
 - **Timezone:** Asia/Shanghai (GMT+8)
+- **Language:** 中文 (preferred communication language)
 - **Notes:** Setting up HomePaw for the first time
 
 ## Context
