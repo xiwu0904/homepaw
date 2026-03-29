@@ -1,0 +1,11 @@
+# HomePaw 智能烹饪工作流 - Python 依赖
+# pip install -r requirements.txt
+
+# Qwen API 调用（食材识别、图片分析、菜谱综合）
+openai>=1.0.0
+
+# 摄像头相关（系统包，需要 apt install）
+# sudo apt install fswebcam ffmpeg
+
+# 以下为系统自带标准库，无需安装：
+# base64, json, argparse, pathlib, re, datetime
